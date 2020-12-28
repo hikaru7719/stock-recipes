@@ -6,6 +6,7 @@
   "author": "Hikaru Miyahara",
   "main": "index.js",
   "scripts": {
+    "dev": "next dev",
     "format": "prettier --write .",
     "lint": "eslint . --ext .tsx,.ts",
     "list:fix": "eslint . --ext .tsx,.ts --fix",
