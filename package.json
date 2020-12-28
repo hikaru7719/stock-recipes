@@ -1,0 +1,8 @@
+{
+  "name": "stock-recipes",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "https://github.com/hikaru7719/stock-recipes.git",
+  "author": "Hikaru Miyahara",
+  "license": "MIT"
+}
