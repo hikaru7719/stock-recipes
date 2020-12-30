@@ -1,6 +1,11 @@
 import * as React from "react";
+import { login } from "../firebase";
 
 const Login: React.FC = () => {
+  const onClickTwitter = async () => {
+    await login();
+  };
+
   return (
     <div
       className={
@@ -17,6 +22,7 @@ const Login: React.FC = () => {
             className={
               "w-full px-8 my-2 rounded-md h-10 bg-blue-500 text-white text-lg"
             }
+            onClick={() => onClickTwitter()}
           >
             Sign in with Twitter
           </button>
