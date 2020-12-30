@@ -6,10 +6,8 @@ type Props = {
 
 const Card: React.FC<Props> = (props) => {
   return (
-    <div className={"w-1/3 "}>
-      <div className={"bg-white shadow-md mx-2 my-3 p-4 h-48"}>
-        {props.title}
-      </div>
+    <div className={"w-full sm:w-1/3 bg-white shadow-md p-4 h-48"}>
+      {props.title}
     </div>
   );
 };
