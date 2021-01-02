@@ -17,8 +17,9 @@ const New: React.FC = () => {
             <form
               className="flex flex-col"
               onSubmit={handleSubmit(async (data) => {
+                console.log(data.image[0]);
                 const uid = await getCurrentUserUid();
-                upload(uid, data.image[0]);
+                await upload(uid, data.image[0], fileName);
               })}
             >
               <div className="flex flex-col my-3">

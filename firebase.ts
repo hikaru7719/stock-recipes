@@ -25,10 +25,12 @@ export async function login(): Promise<void> {
   const result = await firebase.auth().signInWithPopup(provider);
 }
 
-export async function upload(userId: string | null, file: File): Promise<void> {
-  const ref = firebase.storage().ref();
-  const imageRef = ref.child(`${userId}/${uuidv4()}`);
+export async function upload(userId: string | null, file: File, fileName: string): Promise<string> {
+  const array = fileName.split(".");
+  const path = `${userId}/${uuidv4()}${array.length > 0 ? "." + array[array.length - 1]: "" }`;
+  const imageRef = firebase.storage().ref().child(path);
   await imageRef.put(file)
+  return path;
 }
 
 export function getCurrentUserUid(): string | null {
