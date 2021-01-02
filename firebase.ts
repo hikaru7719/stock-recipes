@@ -1,5 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/storage";
+import {v4 as uuidv4} from "uuid";
 
 const config =  {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -23,3 +25,12 @@ export async function login(): Promise<void> {
   const result = await firebase.auth().signInWithPopup(provider);
 }
 
+export async function upload(userId: string | null, file: File): Promise<void> {
+  const ref = firebase.storage().ref();
+  const imageRef = ref.child(`${userId}/${uuidv4()}`);
+  await imageRef.put(file)
+}
+
+export function getCurrentUserUid(): string | null {
+  return firebase.auth().currentUser?.uid;
+}

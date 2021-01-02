@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import Header from "../components/header";
+import { getCurrentUserUid, upload } from "../firebase";
 
 const New: React.FC = () => {
   const { register, handleSubmit } = useForm();
@@ -15,9 +16,9 @@ const New: React.FC = () => {
           <div className={"mt-6"}>
             <form
               className="flex flex-col"
-              onSubmit={handleSubmit((data) => {
-                console.log(data.image);
-                console.log(JSON.stringify(data));
+              onSubmit={handleSubmit(async (data) => {
+                const uid = await getCurrentUserUid();
+                upload(uid, data.image[0]);
               })}
             >
               <div className="flex flex-col my-3">

@@ -1,9 +1,12 @@
+import { useRouter } from "next/router";
 import * as React from "react";
 import { login } from "../firebase";
-
 const Login: React.FC = () => {
+  const router = useRouter();
+
   const onClickTwitter = async () => {
     await login();
+    router.push("/home");
   };
 
   return (
