@@ -1,7 +1,8 @@
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import Header from "../components/header";
-import { getCurrentUserUid, upload } from "../firebase";
+import { createRecipe, getCurrentUserUid, upload } from "../firebase";
+import { Recipe } from "../model";
 
 const New: React.FC = () => {
   const { register, handleSubmit } = useForm();
@@ -17,9 +18,11 @@ const New: React.FC = () => {
             <form
               className="flex flex-col"
               onSubmit={handleSubmit(async (data) => {
-                console.log(data.image[0]);
                 const uid = await getCurrentUserUid();
-                await upload(uid, data.image[0], fileName);
+                const path = await upload(uid, data.image[0], fileName);
+                const recipe = Recipe.of(data);
+                recipe.imagePath = path;
+                await createRecipe(uid, recipe);
               })}
             >
               <div className="flex flex-col my-3">
@@ -27,7 +30,7 @@ const New: React.FC = () => {
                   料理名
                 </label>
                 <input
-                  name="recipeName"
+                  name="name"
                   type="text"
                   className="w-full sm:w-2/3 h-10 ring-1 ring-gray-200 rounded-md px-2 text-mono text-gray-700"
                   ref={register}
@@ -64,10 +67,10 @@ const New: React.FC = () => {
                   className="w-full sm:w-1/6 h-10 ring-1 ring-gray-200 rounded-md px-2 text-mono text-gray-700"
                   ref={register}
                 >
-                  <option>朝</option>
-                  <option>昼</option>
-                  <option>夜</option>
-                  <option>それ以外</option>
+                  <option value="morning">朝</option>
+                  <option value="noon">昼</option>
+                  <option value="evening">夜</option>
+                  <option value="other">それ以外</option>
                 </select>
               </div>
               <div className="flex flex-col my-3">
