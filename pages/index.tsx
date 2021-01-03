@@ -6,7 +6,7 @@ const Login: React.FC = () => {
 
   const onClickTwitter = async () => {
     await login();
-    router.push("/new");
+    await router.push("/new");
   };
 
   return (
@@ -16,10 +16,10 @@ const Login: React.FC = () => {
       }
     >
       <div className={"w-1/3 bg-white shadow-md"}>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        <h2 className="mt-6 text-center text-3xl text-mono font-extrabold text-gray-900">
           Sign in to your account
         </h2>
-        <div className="px-7 py-8">
+        <div className="px-7 py-6">
           <button
             type="button"
             className={
@@ -27,7 +27,7 @@ const Login: React.FC = () => {
             }
             onClick={() => onClickTwitter()}
           >
-            Sign in with Twitter
+            Twitterでサインイン
           </button>
           <button
             type="button"
@@ -36,7 +36,7 @@ const Login: React.FC = () => {
               "w-full px-8 my-2 rounded-md h-10 bg-gray-300 text-white text-lg"
             }
           >
-            Sign in with Google
+            Googleでサインイン
           </button>
           <button
             type="button"
@@ -45,7 +45,7 @@ const Login: React.FC = () => {
               "w-full px-8 my-2 rounded-md h-10 bg-gray-300 text-white text-lg"
             }
           >
-            Sign in with Facebook
+            Facebookでサインイン
           </button>
         </div>
       </div>

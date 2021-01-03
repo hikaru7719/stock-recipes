@@ -25,7 +25,11 @@ initFirebase();
 
 export async function login(): Promise<void> {
   const provider = new firebase.auth.TwitterAuthProvider();
-  const result = await firebase.auth().signInWithPopup(provider);
+  await firebase.auth().signInWithPopup(provider);
+}
+
+export async function logout(): Promise<void> {
+  await firebase.auth().signOut();
 }
 
 export async function upload(
