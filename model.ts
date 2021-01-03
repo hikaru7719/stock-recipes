@@ -4,6 +4,7 @@ import "reflect-metadata";
 type SpanOfTime = "morning" | "noon" | "evening" | "other";
 
 export class Recipe {
+  id: string;
   @Expose()
   name: string;
   @Expose()

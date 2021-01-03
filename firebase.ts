@@ -55,6 +55,19 @@ export async function createRecipe(uid: string, recipe: Recipe): Promise<void> {
   console.log(result);
 }
 
+export async function findRecipes(uid: string): Promise<Array<Recipe>> {
+  const list: Array<Recipe> = [];
+  const snapshot = await firebase
+    .firestore()
+    .collection(`/users/${uid}/recipes`)
+    .withConverter(recipeConverter)
+    .get();
+  snapshot.forEach((v) => {
+    list.push(v.data());
+  })
+  return list;
+}
+
 const recipeConverter = {
   toFirestore(recipe: Recipe): firebase.firestore.DocumentData {
     return recipe.toJSON();
@@ -63,6 +76,8 @@ const recipeConverter = {
     snapshot: firebase.firestore.QueryDocumentSnapshot,
     options: firebase.firestore.SnapshotOptions
   ): Recipe {
-    return Recipe.of(snapshot.data(options));
+    const recipe = Recipe.of(snapshot.data(options));
+    recipe.id = snapshot.id;
+    return recipe;
   },
 };
