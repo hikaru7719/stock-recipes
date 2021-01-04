@@ -2,6 +2,7 @@ import Image from "next/image";
 import * as React from "react";
 type Props = {
   title: string;
+  imagePath: string;
 };
 
 const Card: React.FC<Props> = (props) => {
@@ -19,7 +20,7 @@ const Card: React.FC<Props> = (props) => {
           }`}
         >
           <Image
-            src="/tamago.jpg"
+            src={props.imagePath}
             layout="fill"
             className={isLoading ? "hidden" : ""}
             onLoad={() => setIsLoading(false)}
