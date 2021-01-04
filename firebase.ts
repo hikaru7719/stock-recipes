@@ -46,6 +46,11 @@ export async function upload(
   return path;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function download(path: string): Promise<any> {
+  return firebase.storage().ref().child(path).getDownloadURL();
+}
+
 export function getCurrentUserUid(): string | null {
   return firebase.auth().currentUser?.uid;
 }
