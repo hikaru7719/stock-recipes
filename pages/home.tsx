@@ -9,7 +9,9 @@ const Home: React.FC = () => {
     const recipes = await findRecipes(uid);
     const result = await Promise.all(
       recipes.map(async (r) => {
-        r.imagePath = await download(r.imagePath);
+        if (r.imagePath) {
+          r.imagePath = await download(r.imagePath);
+        }
         return r;
       })
     );
