@@ -2,7 +2,7 @@ import Image from "next/image";
 import * as React from "react";
 type Props = {
   title: string;
-  imagePath: string;
+  imagePath?: string;
 };
 
 const Card: React.FC<Props> = (props) => {
@@ -14,18 +14,31 @@ const Card: React.FC<Props> = (props) => {
           <p className="text-mono text-xl text-gray-600">{props.title}</p>
           <p className="text-mono text-gray-600">2020/12/10</p>
         </div>
-        <div
-          className={`relative w-full h-5/6 ${
-            isLoading ? "bg-gray-300 animate-pulse" : ""
-          }`}
-        >
-          <Image
-            src={props.imagePath}
-            layout="fill"
-            className={isLoading ? "hidden" : ""}
-            onLoad={() => setIsLoading(false)}
-          />
-        </div>
+        {props.imagePath ? (
+          <div
+            className={`relative w-full h-5/6 ${
+              isLoading ? "bg-gray-300 animate-pulse" : ""
+            }`}
+          >
+            <div className={isLoading ? "hidden" : ""}>
+              <Image
+                src={props.imagePath}
+                layout="fill"
+                onLoad={() => {
+                  setIsLoading(false);
+                }}
+              />
+            </div>
+          </div>
+        ) : (
+          <div
+            className={
+              "w-full h-5/6 bg-gray-300 text-center flex items-center justify-center"
+            }
+          >
+            <p className="text-lg text-gray-600 text-mono">No Image</p>
+          </div>
+        )}
       </div>
     </div>
   );
