@@ -56,12 +56,11 @@ export function getCurrentUserUid(): string | null {
 }
 
 export async function createRecipe(uid: string, recipe: Recipe): Promise<void> {
-  const result = await firebase
+  await firebase
     .firestore()
     .collection(`/users/${uid}/recipes`)
     .withConverter(recipeConverter)
     .add(recipe);
-  console.log(result);
 }
 
 export async function findRecipes(uid: string): Promise<Array<Recipe>> {
@@ -77,6 +76,16 @@ export async function findRecipes(uid: string): Promise<Array<Recipe>> {
   return list;
 }
 
+export async function getRecipe(uid: string, documentId: string): Promise<Recipe | undefined> {
+  const doc = await firebase
+    .firestore()
+    .collection(`/users/${uid}/recipes`)
+    .doc(documentId)
+    .withConverter(recipeConverter)
+    .get();
+  return doc.data();
+}
+
 const recipeConverter = {
   toFirestore(recipe: Recipe): firebase.firestore.DocumentData {
     return recipe.toJSON();
@@ -85,7 +94,9 @@ const recipeConverter = {
     snapshot: firebase.firestore.QueryDocumentSnapshot,
     options: firebase.firestore.SnapshotOptions
   ): Recipe {
-    const recipe = Recipe.of(snapshot.data(options));
+    const result = snapshot.data(options);
+    result.date = result?.date?.toDate();
+    const recipe = Recipe.of(result);
     recipe.id = snapshot.id;
     return recipe;
   },

@@ -16,6 +16,7 @@
   "dependencies": {
     "autoprefixer": "10.1.0",
     "class-transformer": "0.3.1",
+    "dayjs": "1.10.3",
     "firebase": "8.2.1",
     "next": "10.0.4",
     "postcss": "8.2.1",

@@ -12,7 +12,12 @@ const CardList: React.FC<Props> = (props) => {
       <div className="flex justify-start flex-wrap flex-row w-full">
         {props.contentList.map((content, i) => {
           return (
-            <Card title={content.name} imagePath={content.imagePath} key={i} />
+            <Card
+              id={content.id}
+              title={content.name}
+              imagePath={content.imagePath}
+              key={i}
+            />
           );
         })}
       </div>

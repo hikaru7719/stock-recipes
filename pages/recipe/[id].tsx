@@ -4,6 +4,7 @@ import * as React from "react";
 import useSWR from "swr";
 import Header from "../../components/header";
 import { download, getCurrentUserUid, getRecipe } from "../../firebase";
+import { formatDate, formatSpanOfTime } from "../../format";
 
 const Recipe: React.FC = () => {
   const router = useRouter();
@@ -15,7 +16,6 @@ const Recipe: React.FC = () => {
       if (recipe.imagePath) {
         recipe.imagePath = await download(recipe.imagePath);
       }
-      console.log(recipe);
       return recipe;
     }
   );
@@ -49,27 +49,35 @@ const Recipe: React.FC = () => {
               <label className="mb-1 text-mono text-gray-600 text-lg">
                 日付
               </label>
-              {/* <p className={"text-mono text-gray-700 text-xl"}>{data.date}</p> */}
+              <p className={"text-mono text-gray-700 text-xl"}>
+                {formatDate(data.date)}
+              </p>
             </div>
             <div className="flex flex-col my-3">
               <label className="mb-1 text-mono text-gray-600 text-lg">
                 時間帯
               </label>
               <p className={"text-mono text-gray-700 text-xl"}>
-                {data.spanOfTime}
+                {formatSpanOfTime(data.spanOfTime)}
               </p>
             </div>
             <div className="flex flex-col my-3">
               <label className="mb-1 text-mono text-gray-600 text-lg">
                 写真
               </label>
-              <Image src={data.imagePath} layout="fill" />
+              <Image
+                className={""}
+                src={data.imagePath}
+                layout={"fixed"}
+                height={500}
+                width={500}
+              />
             </div>
             <button
-              className="text-lg my-7 w-full sm:w-1/12 h-10 ring-1 ring-gray-200 rounded-md bg-red-300 text-white"
+              className="text-lg my-7 w-full sm:w-1/12 h-10 ring-1 ring-gray-200 rounded-md bg-gray-400 text-white"
               type="submit"
             >
-              登録
+              戻る
             </button>
           </div>
         </div>
