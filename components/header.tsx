@@ -17,16 +17,20 @@ const Header: React.FC = () => {
           "flex items-center justify-between container mx-auto h-full w-full"
         }
       >
-        <h1 className={"ml-10 text-2xl font-bold"}>StockRecipes</h1>
+        <Link href="/home">
+          <h1 className={"ml-10 text-2xl font-bold hover:underline"}>
+            StockRecipes
+          </h1>
+        </Link>
         <ul className={"flex"}>
           <Link href="/home">
-            <li className={"mr-10"}>ホーム</li>
+            <li className={"mr-10 hover:underline"}>一覧</li>
           </Link>
           <Link href="/new">
-            <li className={"mr-10"}>登録</li>
+            <li className={"mr-10 hover:underline"}>登録</li>
           </Link>
           <li
-            className={"mr-10"}
+            className={"mr-10 hover:underline"}
             onClick={() => {
               onClick();
             }}
