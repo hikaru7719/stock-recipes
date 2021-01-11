@@ -16,6 +16,7 @@ const CardList: React.FC<Props> = (props) => {
               id={content.id}
               title={content.name}
               imagePath={content.imagePath}
+              date={content.date}
               key={i}
             />
           );
