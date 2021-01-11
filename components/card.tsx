@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
+import { formatDate } from "../format";
 type Props = {
   id: string;
   title: string;
+  date: Date;
   imagePath?: string;
 };
 
@@ -12,10 +14,10 @@ const Card: React.FC<Props> = (props) => {
   return (
     <Link href={`/recipe/${props.id}`}>
       <div className={"w-full sm:w-1/4 mb-4 px-2"}>
-        <div className={"bg-white shadow-md rounded-md h-72 p-6"}>
+        <div className={"bg-white shadow-lg hover:shadow rounded-md h-72 p-6"}>
           <div className="flex justify-between mb-3">
             <p className="text-mono text-xl text-gray-600">{props.title}</p>
-            <p className="text-mono text-gray-600">2020/12/10</p>
+            <p className="text-mono text-gray-600">{formatDate(props.date)}</p>
           </div>
           {props.imagePath ? (
             <div
