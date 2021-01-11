@@ -16,8 +16,8 @@ const Login: React.FC = () => {
       }
     >
       <div className={"w-1/3 bg-white shadow-md"}>
-        <h2 className="mt-6 text-center text-3xl text-mono font-extrabold text-gray-900">
-          Sign in to your account
+        <h2 className="mt-6 text-center text-3xl font-bold text-gray-600">
+          StockRecipesにサインイン
         </h2>
         <div className="px-7 py-6">
           <button
