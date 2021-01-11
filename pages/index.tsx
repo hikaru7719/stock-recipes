@@ -12,12 +12,12 @@ const Login: React.FC = () => {
   return (
     <div
       className={
-        "min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8"
+        "min-h-screen flex items-center justify-center bg-gray-50 md:px-8"
       }
     >
-      <div className={"w-1/3 bg-white shadow-md"}>
+      <div className={"w-full md:w-1/3 bg-white shadow-md"}>
         <h2 className="mt-6 text-center text-3xl font-bold text-gray-600">
-          StockRecipesにサインイン
+          StockRecipes
         </h2>
         <div className="px-7 py-6">
           <button
