@@ -2,44 +2,83 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { logout } from "../firebase";
+import Menu from "./menu";
 
 const Header: React.FC = () => {
   const router = useRouter();
+  const [open, setOpen] = React.useState(false);
+
   const onClick = async () => {
     await logout();
     await router.push("/");
   };
 
   return (
-    <div className={"w-full h-20 bg-red-400  text-white"}>
-      <div
-        className={
-          "flex items-center justify-between container mx-auto h-full w-full"
-        }
-      >
-        <Link href="/home">
-          <h1 className={"ml-10 text-2xl font-bold hover:underline"}>
-            StockRecipes
-          </h1>
-        </Link>
-        <ul className={"flex"}>
+    <>
+      <div className={"w-full h-20 bg-red-400  text-white"}>
+        <div
+          className={
+            "flex items-center justify-between container mx-auto h-full w-full"
+          }
+        >
           <Link href="/home">
-            <li className={"mr-10 hover:underline"}>一覧</li>
+            <h1 className={"ml-10 text-2xl font-bold hover:underline"}>
+              StockRecipes
+            </h1>
           </Link>
-          <Link href="/new">
-            <li className={"mr-10 hover:underline"}>登録</li>
-          </Link>
-          <li
-            className={"mr-10 hover:underline"}
-            onClick={() => {
-              onClick();
-            }}
-          >
-            ログアウト
-          </li>
-        </ul>
+          <ul className={"flex"}>
+            {open ? (
+              <svg
+                className="w-8 mr-10 md:hidden"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                onClick={() => setOpen(!open)}
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            ) : (
+              <svg
+                className="w-8 mr-10 md:hidden"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                onClick={() => setOpen(!open)}
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            )}
+            <Link href="/home">
+              <li className={"hidden md:block mr-10 hover:underline"}>一覧</li>
+            </Link>
+            <Link href="/new">
+              <li className={"hidden md:block mr-10 hover:underline"}>登録</li>
+            </Link>
+            <li
+              className={"hidden md:block mr-10 hover:underline"}
+              onClick={() => {
+                onClick();
+              }}
+            >
+              ログアウト
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+      <Menu
+        open={open}
+        setOpen={(open: boolean) => setOpen(open)}
+        logout={onClick}
+      />
+    </>
   );
 };
 
