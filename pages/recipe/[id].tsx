@@ -20,6 +20,10 @@ const Recipe: React.FC = () => {
     }
   );
 
+  const onClick = () => {
+    router.push("/home");
+  };
+
   return data ? (
     <div className="bg-gray-50 min-h-screen ">
       <Header />
@@ -68,14 +72,19 @@ const Recipe: React.FC = () => {
               <Image
                 className={""}
                 src={data.imagePath}
-                layout={"fixed"}
+                layout={
+                  window.matchMedia("(max-width:767px)").matches
+                    ? "responsive"
+                    : "fixed"
+                }
                 height={500}
                 width={500}
               />
             </div>
             <button
               className="text-lg my-7 w-full sm:w-1/12 h-10 ring-1 ring-gray-200 rounded-md bg-gray-400 text-white"
-              type="submit"
+              type="button"
+              onClick={onClick}
             >
               戻る
             </button>
