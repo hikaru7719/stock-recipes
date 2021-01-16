@@ -1,12 +1,16 @@
+import { useRouter } from "next/router";
 import * as React from "react";
 import useSWR from "swr";
 import CardList from "../components/cardList";
 import Header from "../components/header";
 import LoadingCardList from "../components/loadingCardList";
-import { download, findRecipes, getCurrentUserUid } from "../firebase";
+import { download, findRecipes } from "../firebase";
+import { useUser } from "../hooks";
 
 const Home: React.FC = () => {
-  const { data } = useSWR(getCurrentUserUid(), async (uid: string) => {
+  const router = useRouter();
+  const uid = useUser(() => router.push("/"));
+  const { data } = useSWR(uid, async (uid: string) => {
     const recipes = await findRecipes(uid);
     const result = await Promise.all(
       recipes.map(async (r) => {

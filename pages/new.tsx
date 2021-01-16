@@ -1,12 +1,23 @@
+import { useRouter } from "next/router";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import Header from "../components/header";
-import { createRecipe, getCurrentUserUid, upload } from "../firebase";
+import { createRecipe, upload } from "../firebase";
+import { useUser } from "../hooks";
 import { Recipe } from "../model";
 
 const New: React.FC = () => {
+  const router = useRouter();
+  const uid = useUser(() => router.push("/"));
   const { register, handleSubmit } = useForm();
   const [fileName, setFileName] = React.useState("");
+
+  const onSubmit = handleSubmit(async (data) => {
+    const path = await upload(uid, data.image[0], fileName);
+    const recipe = Recipe.of(data);
+    recipe.imagePath = path;
+    await createRecipe(uid, recipe);
+  });
 
   return (
     <div className="bg-gray-50 min-h-screen ">
@@ -15,16 +26,7 @@ const New: React.FC = () => {
         <div className={"p-10"}>
           <h1 className="text-3xl font-mono text-gray-600">料理の登録</h1>
           <div className={"mt-6"}>
-            <form
-              className="flex flex-col"
-              onSubmit={handleSubmit(async (data) => {
-                const uid = await getCurrentUserUid();
-                const path = await upload(uid, data.image[0], fileName);
-                const recipe = Recipe.of(data);
-                recipe.imagePath = path;
-                await createRecipe(uid, recipe);
-              })}
-            >
+            <form className="flex flex-col" onSubmit={onSubmit}>
               <div className="flex flex-col my-3">
                 <label className="mb-1 text-mono text-gray-600 text-lg">
                   料理名

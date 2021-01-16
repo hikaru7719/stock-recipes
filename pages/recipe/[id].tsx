@@ -3,22 +3,22 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import useSWR from "swr";
 import Header from "../../components/header";
-import { download, getCurrentUserUid, getRecipe } from "../../firebase";
+import { download, getRecipe } from "../../firebase";
 import { formatDate, formatSpanOfTime } from "../../format";
+import { useUser } from "../../hooks";
 
 const Recipe: React.FC = () => {
   const router = useRouter();
+  const uid = useUser(() => router.push("/"));
   const { id } = router.query;
-  const { data } = useSWR(
-    [getCurrentUserUid(), id],
-    async (uid: string, id: string) => {
-      const recipe = await getRecipe(uid, id);
-      if (recipe.imagePath) {
-        recipe.imagePath = await download(recipe.imagePath);
-      }
-      return recipe;
+
+  const { data } = useSWR([uid, id], async (uid: string, id: string) => {
+    const recipe = await getRecipe(uid, id);
+    if (recipe.imagePath) {
+      recipe.imagePath = await download(recipe.imagePath);
     }
-  );
+    return recipe;
+  });
 
   const onClick = () => {
     router.push("/home");
