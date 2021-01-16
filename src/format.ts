@@ -7,6 +7,13 @@ export function formatDate(date?: Date): string {
   return dayjs(date).format("YYYY-MM-DD");
 }
 
+export function formatYear(date?: Date): string {
+  if(!date) {
+    return ""
+  }
+  return dayjs(date).format("YYYY");
+}
+
 export function formatSpanOfTime(span: string): string {
   switch(span) {
     case "morning":

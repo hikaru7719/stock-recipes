@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import useSWR from "swr";
 import Layout from "../../components/layout";
+import LoadingRecipe from "../../components/loadingRecipe";
 import { download, getRecipe } from "../../firebase";
 import { formatDate, formatSpanOfTime } from "../../format";
 import { useUser } from "../../hooks";
@@ -80,7 +81,9 @@ const Recipe: React.FC = () => {
       </div>
     </Layout>
   ) : (
-    <div>Loading ...</div>
+    <Layout>
+      <LoadingRecipe />
+    </Layout>
   );
 };
 
