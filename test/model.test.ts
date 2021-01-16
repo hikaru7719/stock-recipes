@@ -1,4 +1,4 @@
-import { Recipe } from "../model";
+import { Recipe } from "../src/model";
 
 test("Recipe#toJSON", () => {
   const obj = {
