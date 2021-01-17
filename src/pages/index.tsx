@@ -6,7 +6,7 @@ const Login: React.FC = () => {
 
   const onClickTwitter = async () => {
     await login();
-    await router.push("/home");
+    await router.push("/description");
   };
 
   return (

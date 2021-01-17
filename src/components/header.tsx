@@ -21,7 +21,7 @@ const Header: React.FC = () => {
             "flex items-center justify-between container mx-auto h-full w-full"
           }
         >
-          <Link href="/home">
+          <Link href="/description">
             <h1 className={"ml-10 text-2xl font-bold hover:underline"}>
               StockRecipes
             </h1>
