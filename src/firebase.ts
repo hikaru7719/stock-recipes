@@ -72,11 +72,14 @@ export async function findRecipes(uid: string): Promise<Array<Recipe>> {
     .get();
   snapshot.forEach((v) => {
     list.push(v.data());
-  })
+  });
   return list;
 }
 
-export async function getRecipe(uid: string, documentId: string): Promise<Recipe | undefined> {
+export async function getRecipe(
+  uid: string,
+  documentId: string
+): Promise<Recipe | undefined> {
   const doc = await firebase
     .firestore()
     .collection(`/users/${uid}/recipes`)
@@ -84,6 +87,17 @@ export async function getRecipe(uid: string, documentId: string): Promise<Recipe
     .withConverter(recipeConverter)
     .get();
   return doc.data();
+}
+
+export async function deleteRecipe(
+  uid: string,
+  documentId: string
+): Promise<void> {
+  await firebase
+    .firestore()
+    .collection(`/users/${uid}/recipes`)
+    .doc(documentId)
+    .delete();
 }
 
 const recipeConverter = {

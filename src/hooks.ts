@@ -5,7 +5,7 @@ export function useUser(func: () => void): string {
   const uid = getCurrentUserUid();
 
   React.useEffect(() => {
-    if(!uid) {
+    if (!uid) {
       func();
     }
   }, []);

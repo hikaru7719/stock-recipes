@@ -4,7 +4,7 @@ import * as React from "react";
 import useSWR from "swr";
 import Layout from "../../components/layout";
 import LoadingRecipe from "../../components/loadingRecipe";
-import { download, getRecipe } from "../../firebase";
+import { deleteRecipe, download, getRecipe } from "../../firebase";
 import { formatDate, formatSpanOfTime } from "../../format";
 import { useUser } from "../../hooks";
 
@@ -21,7 +21,12 @@ const Recipe: React.FC = () => {
     return recipe;
   });
 
-  const onClick = () => {
+  const onClickBack = () => {
+    router.push("/home");
+  };
+
+  const onClickDelete = async () => {
+    await deleteRecipe(uid, id as string);
     router.push("/home");
   };
 
@@ -71,13 +76,22 @@ const Recipe: React.FC = () => {
             width={500}
           />
         </div>
-        <button
-          className="text-lg my-7 w-full sm:w-1/12 h-10 ring-1 ring-gray-200 rounded-md bg-gray-400 text-white"
-          type="button"
-          onClick={onClick}
-        >
-          戻る
-        </button>
+        <div className="flex">
+          <button
+            className="text-lg my-7 w-1/2 sm:w-1/12 h-10 ring-1 ring-gray-200 rounded-md bg-gray-400 text-white"
+            type="button"
+            onClick={onClickBack}
+          >
+            戻る
+          </button>
+          <button
+            className="text-lg my-7 w-1/2 sm:w-1/12 h-10 ring-1 ring-gray-200 rounded-md bg-blue-400 text-white ml-6"
+            type="button"
+            onClick={onClickDelete}
+          >
+            削除
+          </button>
+        </div>
       </div>
     </Layout>
   ) : (
