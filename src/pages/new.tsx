@@ -12,6 +12,10 @@ const New: React.FC = () => {
   const { register, handleSubmit } = useForm();
   const [fileName, setFileName] = React.useState("");
 
+  const onClickBack = () => {
+    router.push("/home");
+  };
+
   const onSubmit = handleSubmit(async (data) => {
     const path = await upload(uid, data.image[0], fileName);
     const recipe = Recipe.of(data);
@@ -90,12 +94,21 @@ const New: React.FC = () => {
               />
             </label>
           </div>
-          <button
-            className="text-lg my-7 w-full sm:w-1/12 h-10 ring-1 ring-gray-200 rounded-md bg-red-400 text-white"
-            type="submit"
-          >
-            登録
-          </button>
+          <div className="flex">
+            <button
+              className="text-lg my-7 w-1/2 sm:w-1/12 h-10 ring-1 ring-gray-200 rounded-md bg-gray-400 text-white"
+              type="button"
+              onClick={onClickBack}
+            >
+              戻る
+            </button>
+            <button
+              className="text-lg my-7 w-1/2 sm:w-1/12 h-10 ring-1 ring-gray-200 rounded-md bg-red-400 text-white ml-6"
+              type="submit"
+            >
+              登録
+            </button>
+          </div>
         </form>
       </div>
     </Layout>
