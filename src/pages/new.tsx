@@ -1,13 +1,18 @@
 import { useRouter } from "next/router";
 import * as React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import Layout from "../components/layout";
+import SelectMessage from "../components/selectMessage";
 import { createRecipe, upload } from "../firebase";
 import { useUser } from "../hooks";
 import { Recipe } from "../model";
+import { error, success, stateMessage } from "../store/messageSlice";
 
 const New: React.FC = () => {
+  const message = useSelector(stateMessage);
   const router = useRouter();
+  const dispatch = useDispatch();
   const uid = useUser(() => router.push("/"));
   const { register, handleSubmit } = useForm();
   const [fileName, setFileName] = React.useState("");
@@ -17,15 +22,22 @@ const New: React.FC = () => {
   };
 
   const onSubmit = handleSubmit(async (data) => {
-    const path = await upload(uid, data.image[0], fileName);
-    const recipe = Recipe.of(data);
-    recipe.imagePath = path;
-    await createRecipe(uid, recipe);
+    try {
+      const path = await upload(uid, data.image[0], fileName);
+      const recipe = Recipe.of(data);
+      recipe.imagePath = path;
+      await createRecipe(uid, recipe);
+      dispatch(success());
+      router.push("/home");
+    } catch (e) {
+      dispatch(error());
+    }
   });
 
   return (
     <Layout>
       <h1 className="text-3xl font-mono text-gray-600">料理の登録</h1>
+      <SelectMessage message={message} />
       <div className={"mt-6"}>
         <form className="flex flex-col" onSubmit={onSubmit}>
           <div className="flex flex-col my-3">

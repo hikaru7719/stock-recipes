@@ -15,6 +15,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "1.5.0",
     "autoprefixer": "10.1.0",
     "class-transformer": "0.3.1",
     "dayjs": "1.10.3",
@@ -26,6 +27,7 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-hook-form": "6.14.0",
+    "react-redux": "7.2.2",
     "swr": "0.3.11",
     "tailwindcss": "2.0.2",
     "uuid": "8.3.2"
