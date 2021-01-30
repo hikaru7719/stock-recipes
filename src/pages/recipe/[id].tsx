@@ -45,7 +45,7 @@ const Recipe: React.FC = () => {
           <a
             href={data.url}
             target="blank"
-            className={"text-mono text-gray-700 text-xl underline"}
+            className={"text-mono text-gray-700 text-xl underline truncate"}
           >
             {data.url}
           </a>
