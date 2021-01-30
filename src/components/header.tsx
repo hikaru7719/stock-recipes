@@ -1,14 +1,23 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
+import { useDispatch } from "react-redux";
 import { logout } from "../firebase";
+import { reset } from "../store/messageSlice";
 import Menu from "./menu";
 
 const Header: React.FC = () => {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
 
-  const onClick = async () => {
+  const dispatch = useDispatch();
+
+  const onClickNew = async () => {
+    dispatch(reset());
+    await router.push("/new");
+  };
+
+  const onClickLogout = async () => {
     await logout();
     await router.push("/");
   };
@@ -59,13 +68,18 @@ const Header: React.FC = () => {
             <Link href="/home">
               <li className={"hidden md:block mr-10 hover:underline"}>一覧</li>
             </Link>
-            <Link href="/new">
-              <li className={"hidden md:block mr-10 hover:underline"}>登録</li>
-            </Link>
             <li
               className={"hidden md:block mr-10 hover:underline"}
               onClick={() => {
-                onClick();
+                onClickNew();
+              }}
+            >
+              登録
+            </li>
+            <li
+              className={"hidden md:block mr-10 hover:underline"}
+              onClick={() => {
+                onClickLogout();
               }}
             >
               ログアウト
@@ -76,7 +90,7 @@ const Header: React.FC = () => {
       <Menu
         open={open}
         setOpen={(open: boolean) => setOpen(open)}
-        logout={onClick}
+        logout={onClickLogout}
       />
     </>
   );

@@ -12,10 +12,13 @@ export const messageSlice = createSlice({
     success: (state) => {
       state.value = "success";
     },
+    reset: (state) => {
+      state.value = "none";
+    },
   },
 });
 
-export const { error, success } = messageSlice.actions;
+export const { error, success, reset } = messageSlice.actions;
 export const stateMessage = (state) => state.message.value;
 
 export default messageSlice.reducer;
