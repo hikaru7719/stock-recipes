@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { useDispatch } from "react-redux";
@@ -12,12 +11,13 @@ const Header: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  const onClickNew = async () => {
+  const onClick = async (path: string) => {
     dispatch(reset());
-    await router.push("/new");
+    await router.push(path);
   };
 
   const onClickLogout = async () => {
+    dispatch(reset());
     await logout();
     await router.push("/");
   };
@@ -30,11 +30,14 @@ const Header: React.FC = () => {
             "flex items-center justify-between container mx-auto h-full w-full"
           }
         >
-          <Link href="/description">
-            <h1 className={"ml-10 text-2xl font-bold hover:underline"}>
-              StockRecipes
-            </h1>
-          </Link>
+          <h1
+            className={"ml-10 text-2xl font-bold hover:underline"}
+            onClick={() => {
+              onClick("/home");
+            }}
+          >
+            StockRecipes
+          </h1>
           <ul className={"flex"}>
             {open ? (
               <svg
@@ -65,13 +68,18 @@ const Header: React.FC = () => {
                 />
               </svg>
             )}
-            <Link href="/home">
-              <li className={"hidden md:block mr-10 hover:underline"}>一覧</li>
-            </Link>
             <li
               className={"hidden md:block mr-10 hover:underline"}
               onClick={() => {
-                onClickNew();
+                onClick("/home");
+              }}
+            >
+              一覧
+            </li>
+            <li
+              className={"hidden md:block mr-10 hover:underline"}
+              onClick={() => {
+                onClick("/new");
               }}
             >
               登録
