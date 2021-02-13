@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../firebase";
+import { onClickForRouter } from "../handler";
 import { reset } from "../store/messageSlice";
 import Menu from "./menu";
 
@@ -10,11 +11,6 @@ const Header: React.FC = () => {
   const [open, setOpen] = React.useState(false);
 
   const dispatch = useDispatch();
-
-  const onClick = async (path: string) => {
-    dispatch(reset());
-    await router.push(path);
-  };
 
   const onClickLogout = async () => {
     dispatch(reset());
@@ -33,7 +29,7 @@ const Header: React.FC = () => {
           <h1
             className={"ml-10 text-2xl font-bold hover:underline"}
             onClick={() => {
-              onClick("/home");
+              onClickForRouter(dispatch, router, "/home");
             }}
           >
             StockRecipes
@@ -71,7 +67,7 @@ const Header: React.FC = () => {
             <li
               className={"hidden md:block mr-10 hover:underline"}
               onClick={() => {
-                onClick("/home");
+                onClickForRouter(dispatch, router, "/home");
               }}
             >
               一覧
@@ -79,7 +75,7 @@ const Header: React.FC = () => {
             <li
               className={"hidden md:block mr-10 hover:underline"}
               onClick={() => {
-                onClick("/new");
+                onClickForRouter(dispatch, router, "/new");
               }}
             >
               登録

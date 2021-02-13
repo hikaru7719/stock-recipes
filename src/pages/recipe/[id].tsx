@@ -1,15 +1,18 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import * as React from "react";
+import { useDispatch } from "react-redux";
 import useSWR from "swr";
 import Layout from "../../components/layout";
 import LoadingRecipe from "../../components/loadingRecipe";
 import { deleteRecipe, download, getRecipe } from "../../firebase";
 import { formatDate, formatSpanOfTime } from "../../format";
 import { useUser } from "../../hooks";
+import { success, error } from "../../store/messageSlice";
 
 const Recipe: React.FC = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const uid = useUser(() => router.push("/"));
   const { id } = router.query;
 
@@ -26,8 +29,13 @@ const Recipe: React.FC = () => {
   };
 
   const onClickDelete = async () => {
-    await deleteRecipe(uid, id as string);
-    router.push("/home");
+    try {
+      await deleteRecipe(uid, id as string);
+      dispatch(success());
+      router.push("/home");
+    } catch (e) {
+      dispatch(error());
+    }
   };
 
   return data ? (
